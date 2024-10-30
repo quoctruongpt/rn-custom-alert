@@ -1,5 +1,8 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useCustomAlert, CustomAlertProvider } from 'rn-custom-alert';
+import {
+  useCustomAlert,
+  CustomAlertProvider,
+} from '@quoctruongpt/rn-custom-alert';
 
 export default function App() {
   return (
@@ -19,7 +22,27 @@ const Test = () => {
         show({
           title: 'Alert',
           message: 'This is an alert abc xin chào mọi người. Ok không bạn',
-          actions: [{ label: 'OK' }],
+          icon: {
+            source: require('./hello.png'),
+            style: { width: 100, height: 100 },
+          },
+          actions: [
+            {
+              label: 'OK',
+              onPress: () =>
+                show({
+                  title: 'HIHI',
+                  message:
+                    'This is an alert abc xin chào mọi người. Ok không bạn',
+                  actions: [
+                    {
+                      label: 'OK',
+                      onPress: () => {},
+                    },
+                  ],
+                }),
+            },
+          ],
         });
       }}
     >
