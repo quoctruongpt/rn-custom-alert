@@ -1,20 +1,17 @@
-import { useState, useEffect, act } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useCustomAlert, CustomAlertProvider } from 'rn-custom-alert';
 
 export default function App() {
-  const [result, setResult] = useState<number | undefined>();
-
   return (
     <CustomAlertProvider>
       <View style={styles.container}>
-        <Hihi />
+        <Test />
       </View>
     </CustomAlertProvider>
   );
 }
 
-const Hihi = () => {
+const Test = () => {
   const { show } = useCustomAlert();
   return (
     <TouchableOpacity
@@ -26,7 +23,7 @@ const Hihi = () => {
         });
       }}
     >
-      <View style={{ width: 100, height: 100, backgroundColor: 'red' }} />
+      <Text>Click me</Text>
     </TouchableOpacity>
   );
 };
