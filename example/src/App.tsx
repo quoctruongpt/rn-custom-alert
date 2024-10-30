@@ -1,20 +1,35 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'rn-custom-alert';
+import { useState, useEffect, act } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useCustomAlert, CustomAlertProvider } from 'rn-custom-alert';
 
 export default function App() {
   const [result, setResult] = useState<number | undefined>();
 
-  useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <CustomAlertProvider>
+      <View style={styles.container}>
+        <Hihi />
+      </View>
+    </CustomAlertProvider>
   );
 }
+
+const Hihi = () => {
+  const { show } = useCustomAlert();
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        show({
+          title: 'Alert',
+          message: 'This is an alert abc xin chào mọi người. Ok không bạn',
+          actions: [{ label: 'OK' }],
+        });
+      }}
+    >
+      <View style={{ width: 100, height: 100, backgroundColor: 'red' }} />
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
