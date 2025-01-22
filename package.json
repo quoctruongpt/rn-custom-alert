@@ -1,6 +1,6 @@
 {
   "name": "@quoctruongpt/rn-custom-alert",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Custom alert",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",

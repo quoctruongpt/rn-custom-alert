@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import type { IAlert, IAlertState, IAlertContext, ICustomAlert } from './types';
 import { CustomAlert } from './CustomAlert';
+import { Modal } from 'react-native';
 
 interface ICustomAlertProviderProps extends ICustomAlert {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ export function CustomAlertProvider({
   ...props
 }: ICustomAlertProviderProps) {
   const [alerts, setAlerts] = useState<IAlertState[]>([]);
-  const currentAlert = alerts.length > 0 ? alerts[alerts.length - 1] : null;
+  const [currentAlert, setCurrentAlert] = useState<IAlertState | null>(null);
 
   const show = useCallback((alert: IAlert): number => {
     const id = performance.now();
@@ -38,11 +39,19 @@ export function CustomAlertProvider({
     );
   }, []);
 
+  useEffect(() => {
+    if (alerts.length > 0) {
+      setCurrentAlert(alerts[0] || null);
+    }
+  }, [alerts.length]);
+
   return (
     <AlertContext.Provider value={{ show, hide, update }}>
       {children}
-      {currentAlert ? (
-        <CustomAlert {...currentAlert} {...props} onHide={hide} />
+      {alerts.length > 0 && currentAlert ? (
+        <Modal transparent>
+          <CustomAlert {...currentAlert} {...props} onHide={hide} />
+        </Modal>
       ) : null}
     </AlertContext.Provider>
   );

@@ -68,51 +68,49 @@ export function CustomAlert(props: ICustomAlertProps) {
   }, [id]);
 
   return (
-    <Modal transparent visible={true}>
-      <View style={styles.overlay}>
-        <Animated.View style={{ transform: [{ scale: fadeAnim }] }}>
-          {AlertComponent ? (
-            AlertComponent(props)
-          ) : (
-            <View style={[styles.alertBox, style]}>
-              {renderIcon()}
-              <Text style={[styles.title, titleStyle]}>{title}</Text>
-              <Text style={[styles.message, messageStyle]}>{message}</Text>
-              <View style={[styles.buttonContainer, buttonContainerStyle]}>
-                {actions?.map(({ label, onPress, type }, index) => (
-                  <TouchableOpacity
-                    key={index}
+    <View style={styles.overlay}>
+      <Animated.View style={{ transform: [{ scale: fadeAnim }] }}>
+        {AlertComponent ? (
+          AlertComponent(props)
+        ) : (
+          <View style={[styles.alertBox, style]}>
+            {renderIcon()}
+            <Text style={[styles.title, titleStyle]}>{title}</Text>
+            <Text style={[styles.message, messageStyle]}>{message}</Text>
+            <View style={[styles.buttonContainer, buttonContainerStyle]}>
+              {actions?.map(({ label, onPress, type }, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={[
+                    styles.button,
+                    type === EActionType.CANCEL ? buttonCancelStyle : null,
+                    type === EActionType.CONFIRM ? buttonConfirmStyle : null,
+                  ]}
+                  onPress={() => {
+                    onPress?.();
+                    hideWhenAction && fadeOut();
+                  }}
+                >
+                  <Text
                     style={[
-                      styles.button,
-                      type === EActionType.CANCEL ? buttonCancelStyle : null,
-                      type === EActionType.CONFIRM ? buttonConfirmStyle : null,
+                      styles.buttonText,
+                      type === EActionType.CANCEL
+                        ? textButtonCancelStyle
+                        : null,
+                      type === EActionType.CONFIRM
+                        ? textButtonConfirmStyle
+                        : null,
                     ]}
-                    onPress={() => {
-                      onPress?.();
-                      hideWhenAction && fadeOut();
-                    }}
                   >
-                    <Text
-                      style={[
-                        styles.buttonText,
-                        type === EActionType.CANCEL
-                          ? textButtonCancelStyle
-                          : null,
-                        type === EActionType.CONFIRM
-                          ? textButtonConfirmStyle
-                          : null,
-                      ]}
-                    >
-                      {label}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
-          )}
-        </Animated.View>
-      </View>
-    </Modal>
+          </View>
+        )}
+      </Animated.View>
+    </View>
   );
 }
 
